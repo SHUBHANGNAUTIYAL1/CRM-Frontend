@@ -10,7 +10,7 @@ const Home = () => {
   useEffect(() => {
     const fetchContacts = async () => {
       try {
-        const response = await axios.get('http://localhost:8100/api/contact/');
+        const response = await axios.get('https://crm-backend-if6g.onrender.com/api/contact/');
         const sortedContacts = response.data.sort((a, b) => {
           const dateA = new Date(a.createdAt).getTime();
           const dateB = new Date(b.createdAt).getTime();

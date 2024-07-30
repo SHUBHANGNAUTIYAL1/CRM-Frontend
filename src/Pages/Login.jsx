@@ -11,7 +11,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8100/api/auth/login', { email, password });
+      const response = await axios.post('https://crm-backend-if6g.onrender.com/api/auth/login', { email, password });
       console.log(response.data); // Handle successful login
       navigate('/home')
     } catch (error) {

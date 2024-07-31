@@ -1,8 +1,8 @@
 // src/components/Dashboard.js
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAddressBook, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import React from "react";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAddressBook, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
 const Dashboard = () => {
   return (
@@ -12,8 +12,20 @@ const Dashboard = () => {
         <ul>
           <li className="mb-4 flex items-center">
             <FontAwesomeIcon icon={faAddressBook} className="mr-2" />
-            <Link to="/home" className="text-white font-bold hover:text-gray-300">
+            <Link
+              to="/home"
+              className="text-white font-bold hover:text-gray-300"
+            >
               Contact Details
+            </Link>
+          </li>
+          <li className="mb-4 flex items-center">
+            <FontAwesomeIcon icon={faAddressBook} className="mr-2" />
+            <Link
+              to="/popup"
+              className="text-white font-bold hover:text-gray-300"
+            >
+              PopUp Form Details
             </Link>
           </li>
           <li className="mb-4 flex items-center">

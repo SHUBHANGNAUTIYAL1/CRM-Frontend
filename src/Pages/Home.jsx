@@ -25,6 +25,15 @@ const Home = () => {
     fetchContacts();
   }, []);
 
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`https://crm-backend-if6g.onrender.com/api/contact/${id}`);
+      setContacts(contacts.filter(contact => contact._id !== id));
+    } catch (error) {
+      console.error('Error deleting contact:', error);
+    }
+  };
+
   // Determine the current contacts to be displayed
   const indexOfLastContact = currentPage * itemsPerPage;
   const indexOfFirstContact = indexOfLastContact - itemsPerPage;
@@ -34,7 +43,7 @@ const Home = () => {
   return (
     <div className="flex h-screen">
       <Dashboard />
-      <div className="flex-1 p-6 bg-gray-100">
+      <div className="flex-1 p-6 bg-gray-100 h-screen overflow-y-scroll">
         <h2 className="text-2xl font-bold mb-6 text-gray-800">Contact Details</h2>
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white shadow-md rounded-lg">
@@ -46,6 +55,7 @@ const Home = () => {
                 <th className="py-3 px-6 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Occupation</th>
                 <th className="py-3 px-6 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Referral Source</th>
                 <th className="py-3 px-6 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Date & Time</th>
+                <th className="py-3 px-6 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -58,6 +68,14 @@ const Home = () => {
                   <td className="py-3 px-6 border-b border-gray-200">{contact.referralSource}</td>
                   <td className="py-3 px-6 border-b border-gray-200">
                     {new Date(contact.createdAt).toLocaleString()}
+                  </td>
+                  <td className="py-3 px-6 border-b border-gray-200">
+                    <button
+                      onClick={() => handleDelete(contact._id)}
+                      className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-700"
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}

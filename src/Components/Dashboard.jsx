@@ -16,7 +16,7 @@ const Dashboard = () => {
               to="/home"
               className="text-white font-bold hover:text-gray-300"
             >
-              Contact Details
+              Webinar Registration
             </Link>
           </li>
           <li className="mb-4 flex items-center">
@@ -25,7 +25,7 @@ const Dashboard = () => {
               to="/popup"
               className="text-white font-bold hover:text-gray-300"
             >
-              PopUp Form Details
+              Meditation Guide Data
             </Link>
           </li>
           <li className="mb-4 flex items-center">

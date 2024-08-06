@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import Dashboard from "../Components/Dashboard";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import Dashboard from '../Components/Dashboard';
 
 const PopUp = () => {
   const [contacts, setContacts] = useState([]);
@@ -10,9 +10,7 @@ const PopUp = () => {
   useEffect(() => {
     const fetchContacts = async () => {
       try {
-        const response = await axios.get(
-          "https://crm-backend-if6g.onrender.com/api/popup/"
-        );
+        const response = await axios.get('https://crm-backend-if6g.onrender.com/api/pop/');
         const sortedContacts = response.data.sort((a, b) => {
           const dateA = new Date(a.createdAt).getTime();
           const dateB = new Date(b.createdAt).getTime();
@@ -20,73 +18,64 @@ const PopUp = () => {
         });
         setContacts(sortedContacts);
       } catch (error) {
-        console.error("Error fetching contacts:", error);
+        console.error('Error fetching contacts:', error);
       }
     };
 
     fetchContacts();
   }, []);
 
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`https://crm-backend-if6g.onrender.com/api/pop/${id}`);
+      setContacts(contacts.filter(contact => contact._id !== id));
+    } catch (error) {
+      console.error('Error deleting contact:', error);
+    }
+  };
+
   // Determine the current contacts to be displayed
   const indexOfLastContact = currentPage * itemsPerPage;
   const indexOfFirstContact = indexOfLastContact - itemsPerPage;
-  const currentContacts = contacts.slice(
-    indexOfFirstContact,
-    indexOfLastContact
-  );
+  const currentContacts = contacts.slice(indexOfFirstContact, indexOfLastContact);
   const totalPages = Math.ceil(contacts.length / itemsPerPage);
 
   return (
     <div className="flex h-screen">
       <Dashboard />
-      <div className="flex-1 p-6 bg-gray-100">
-        <h2 className="text-2xl font-bold mb-6 text-gray-800">
-          Contact Details
-        </h2>
+      <div className="flex-1 p-6 bg-gray-100 h-screen overflow-y-scroll">
+        <h2 className="text-2xl font-bold mb-6 text-gray-800">Contact Details</h2>
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white shadow-md rounded-lg">
             <thead>
               <tr>
-                <th className="py-3 px-6 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  Name
-                </th>
-                <th className="py-3 px-6 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  Email
-                </th>
-                <th className="py-3 px-6 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  Contact Number
-                </th>
-                <th className="py-3 px-6 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  Occupation
-                </th>
-                <th className="py-3 px-6 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  Referral Source
-                </th>
-                <th className="py-3 px-6 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  Date & Time
-                </th>
+                <th className="py-3 px-6 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Name</th>
+                <th className="py-3 px-6 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Email</th>
+                <th className="py-3 px-6 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Contact Number</th>
+                <th className="py-3 px-6 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Occupation</th>
+                <th className="py-3 px-6 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Referral Source</th>
+                <th className="py-3 px-6 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Date & Time</th>
+                <th className="py-3 px-6 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
             <tbody>
               {currentContacts.map((contact) => (
                 <tr key={contact._id} className="hover:bg-gray-100">
-                  <td className="py-3 px-6 border-b border-gray-200">
-                    {contact.name}
-                  </td>
-                  <td className="py-3 px-6 border-b border-gray-200">
-                    {contact.email}
-                  </td>
-                  <td className="py-3 px-6 border-b border-gray-200">
-                    {contact.contactNumber}
-                  </td>
-                  <td className="py-3 px-6 border-b border-gray-200">
-                    {contact.occupation}
-                  </td>
-                  <td className="py-3 px-6 border-b border-gray-200">
-                    {contact.referralSource}
-                  </td>
+                  <td className="py-3 px-6 border-b border-gray-200">{contact.name}</td>
+                  <td className="py-3 px-6 border-b border-gray-200">{contact.email}</td>
+                  <td className="py-3 px-6 border-b border-gray-200">{contact.contactNumber}</td>
+                  <td className="py-3 px-6 border-b border-gray-200">{contact.occupation}</td>
+                  <td className="py-3 px-6 border-b border-gray-200">{contact.referralSource}</td>
                   <td className="py-3 px-6 border-b border-gray-200">
                     {new Date(contact.createdAt).toLocaleString()}
+                  </td>
+                  <td className="py-3 px-6 border-b border-gray-200">
+                    <button
+                      onClick={() => handleDelete(contact._id)}
+                      className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-700"
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -101,9 +90,7 @@ const PopUp = () => {
           >
             Previous
           </button>
-          <span className="self-center text-gray-700">
-            Page {currentPage} of {totalPages}
-          </span>
+          <span className="self-center text-gray-700">Page {currentPage} of {totalPages}</span>
           <button
             disabled={currentPage === totalPages}
             onClick={() => setCurrentPage(currentPage + 1)}

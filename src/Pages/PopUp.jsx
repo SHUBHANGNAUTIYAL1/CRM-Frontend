@@ -44,7 +44,7 @@ const PopUp = () => {
     <div className="flex h-screen">
       <Dashboard />
       <div className="flex-1 p-6 bg-gray-100 h-screen overflow-y-scroll">
-        <h2 className="text-2xl font-bold mb-6 text-gray-800">Contact Details</h2>
+        <h2 className="text-2xl font-bold mb-6 text-gray-800">Meditation Registration Details</h2>
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white shadow-md rounded-lg">
             <thead>
